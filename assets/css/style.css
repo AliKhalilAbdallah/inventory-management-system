@@ -1,0 +1,56 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5fbfa;
+}
+
+.btn {
+  border-radius: 5px;
+}
+
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+h2, h5 {
+  font-weight: 600;
+}
+
+#saleTotal {
+  font-weight: bold;
+}
+
+.nav-link {
+  color: #0f766e !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: rgba(15,118,110,0.12);
+  border-radius: 6px;
+}
+
+.table-dark th {
+  background-color: #0f766e !important;
+}
+
+.btn-primary {
+  background-color: #0f766e;
+  border-color: #0f766e;
+}
+
+.btn-primary:hover {
+  background-color: #115e59;
+  border-color: #115e59;
+}
+
+.btn-success {
+  background-color: #14b8a6;
+  border-color: #14b8a6;
+}
+
+.btn-success:hover {
+  background-color: #0f766e;
+  border-color: #0f766e;
+}
