@@ -5,8 +5,15 @@ include "config/database.php";
 $success_message = "";
 $error_message = "";
 
-if (isset($_GET["success"]) && $_GET["success"] === "product_deleted") {
-    $success_message = "Product deleted successfully.";
+if (isset($_GET["success"])) {
+
+    if ($_GET["success"] === "product_deleted") {
+        $success_message = "Product deleted successfully.";
+    }
+
+    elseif ($_GET["success"] === "product_created") {
+        $success_message = "Product created successfully.";
+    }
 }
 
 if (isset($_GET["error"])) {
@@ -17,7 +24,7 @@ if (isset($_GET["error"])) {
     } elseif ($_GET["error"] === "invalid_product") {
         $error_message = "Invalid product selection.";
     } else {
-        $error_message = "The product could not be deleted.";
+        $error_message = urldecode($_GET["error"]);
     }
 }
 ?>
