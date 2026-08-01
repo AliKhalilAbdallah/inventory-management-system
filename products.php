@@ -1,5 +1,26 @@
-<?php include "config/auth.php"; ?>
-<?php include "config/database.php"; ?>
+<?php
+include "config/auth.php";
+include "config/database.php";
+
+$success_message = "";
+$error_message = "";
+
+if (isset($_GET["success"]) && $_GET["success"] === "product_deleted") {
+    $success_message = "Product deleted successfully.";
+}
+
+if (isset($_GET["error"])) {
+    if ($_GET["error"] === "product_in_use") {
+        $error_message = "This product cannot be deleted because it is linked to existing sales or purchase records.";
+    } elseif ($_GET["error"] === "product_not_found") {
+        $error_message = "The selected product could not be found.";
+    } elseif ($_GET["error"] === "invalid_product") {
+        $error_message = "Invalid product selection.";
+    } else {
+        $error_message = "The product could not be deleted.";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,17 +44,48 @@
       <!-- Main Content -->
       <main class="col-md-10 p-4">
         <h1 class="mb-4">Products</h1>
-            <p class="text-muted">Manage products, stock quantities, prices, and categories.</p>
+
+        <p class="text-muted">
+          Manage products, stock quantities, prices, and categories.
+        </p>
+
+        <?php if ($success_message): ?>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($success_message); ?>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close">
+            </button>
+          </div>
+        <?php endif; ?>
+
+        <?php if ($error_message): ?>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($error_message); ?>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close">
+            </button>
+          </div>
+        <?php endif; ?>
+
         <!-- Add Product Form -->
         <form action="actions/product_create.php" method="POST" class="mb-4">
           <div class="row g-3">
 
             <div class="col-md-4">
-              <input type="text"
-                     name="product_name"
-                     class="form-control"
-                     placeholder="Product Name"
-                     required>
+              <input
+                type="text"
+                name="product_name"
+                class="form-control"
+                placeholder="Product Name"
+                required>
             </div>
 
             <div class="col-md-3">
@@ -46,8 +98,8 @@
 
                   while ($cat = mysqli_fetch_assoc($cat_result)) {
                 ?>
-                    <option value="<?php echo $cat['category_id']; ?>">
-                      <?php echo $cat['category_name']; ?>
+                    <option value="<?php echo $cat["category_id"]; ?>">
+                      <?php echo htmlspecialchars($cat["category_name"]); ?>
                     </option>
                 <?php
                   }
@@ -56,20 +108,24 @@
             </div>
 
             <div class="col-md-2">
-              <input type="number"
-                     name="stock_quantity"
-                     class="form-control"
-                     placeholder="Quantity"
-                     required>
+              <input
+                type="number"
+                name="stock_quantity"
+                class="form-control"
+                placeholder="Quantity"
+                min="0"
+                required>
             </div>
 
             <div class="col-md-2">
-              <input type="number"
-                     step="0.01"
-                     name="price"
-                     class="form-control"
-                     placeholder="Price"
-                     required>
+              <input
+                type="number"
+                step="0.01"
+                name="price"
+                class="form-control"
+                placeholder="Price"
+                min="0"
+                required>
             </div>
 
             <div class="col-md-1">
@@ -108,19 +164,35 @@
             ?>
                 <tr>
                   <td><?php echo $row["product_id"]; ?></td>
-                  <td><?php echo $row["product_name"]; ?></td>
-                  <td><?php echo $row["category_name"]; ?></td>
-                  <td><?php echo $row["stock_quantity"]; ?></td>
-                  <td>$<?php echo $row["price"]; ?></td>
+
                   <td>
-                    <a href="product_edit.php?id=<?php echo $row["product_id"]; ?>"
-                         class="btn btn-primary btn-sm">
-                                    Edit
+                    <?php echo htmlspecialchars($row["product_name"]); ?>
+                  </td>
+
+                  <td>
+                    <?php echo htmlspecialchars($row["category_name"]); ?>
+                  </td>
+
+                  <td>
+                    <?php echo $row["stock_quantity"]; ?>
+                  </td>
+
+                  <td>
+                    $<?php echo number_format((float) $row["price"], 2); ?>
+                  </td>
+
+                  <td>
+                    <a
+                      href="product_edit.php?id=<?php echo $row["product_id"]; ?>"
+                      class="btn btn-primary btn-sm">
+                      Edit
                     </a>
 
-                    <a href="actions/product_delete.php?id=<?php echo $row["product_id"]; ?>"
-                    class="btn btn-danger btn-sm">
-                                   Delete
+                    <a
+                      href="actions/product_delete.php?id=<?php echo $row["product_id"]; ?>"
+                      class="btn btn-danger btn-sm"
+                      onclick="return confirm('Are you sure you want to delete this product?');">
+                      Delete
                     </a>
                   </td>
                 </tr>
@@ -138,6 +210,7 @@
   <!-- Footer -->
   <div id="footer"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
