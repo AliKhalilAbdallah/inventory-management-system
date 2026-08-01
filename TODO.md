@@ -5,19 +5,19 @@ This roadmap tracks the planned improvements for turning StockFlow from a univer
 ## Priority 1 — Critical Fixes
 
 - [x] Fix registration-page navigation
-- [ ] Prevent product stock from becoming negative
-- [ ] Validate product quantity, price, purchase cost, and sales quantity
-- [ ] Show user-friendly messages instead of raw MySQL errors
-- [ ] Handle attempts to delete products that have sales or purchase history
-- [ ] Add confirmation prompts before delete operations
+- [x] Prevent product stock from becoming negative
+- [x] Validate product quantity, price, purchase cost, and sales quantity
+- [x] Show user-friendly messages instead of raw MySQL errors
+- [x] Handle attempts to delete products that have sales or purchase history
+- [x] Add confirmation prompts before delete operations
 - [ ] Fix the broken logo on the login page
 - [ ] Make the logout action easier to find
 
 ## Priority 2 — Reports and Analytics
 
-- [ ] Add date-range filtering
-- [ ] Add product filtering
-- [ ] Add category filtering
+- [x] Add date-range filtering
+- [x] Add product filtering
+- [x] Add category filtering
 - [ ] Add supplier filtering
 - [ ] Show best-selling products
 - [ ] Show highest-revenue products
@@ -73,7 +73,7 @@ This roadmap tracks the planned improvements for turning StockFlow from a univer
 
 - [ ] Replace unrealistic demo categories and products
 - [ ] Replace unrealistic supplier names
-- [ ] Clean invalid stock values
+- [x] Clean invalid stock values
 - [ ] Add screenshots to the README
 - [ ] Add a live demo if hosting becomes available
 - [ ] Add release notes
@@ -81,6 +81,11 @@ This roadmap tracks the planned improvements for turning StockFlow from a univer
 
 ## Completed Milestones
 
+- [x] Fix registration workflow
+- [x] Improve product validation
+- [x] Improve purchase validation
+- [x] Improve category validation
+- [x] Improve reports with filtering
 - [x] Initialize Git repository
 - [x] Add `.gitignore`
 - [x] Publish repository on GitHub
