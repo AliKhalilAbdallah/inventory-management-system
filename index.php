@@ -30,7 +30,7 @@
 
       <!-- Register Link -->
       <div class="text-center mt-3">
-        <small>Don’t have an account? <a href="register.html">Register</a></small>
+        <small>Don’t have an account? <a href="register.php">Register</a></small>
       </div>
     </div>
   </div>
