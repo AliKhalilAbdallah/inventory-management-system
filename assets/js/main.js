@@ -125,32 +125,41 @@ if (saveSaleBtn) {
 
     const total = currentSaleItems.reduce((sum, item) => sum + item.subtotal, 0);
 
-    fetch("actions/sale_create.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        date: date,
-        total: total,
-        items: currentSaleItems
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert("Sale saved successfully");
+   fetch("actions/sale_create.php", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    date: date,
+    total: total,
+    items: currentSaleItems
+  })
+})
+.then(async response => {
+  const data = await response.json();
+  console.log("Sale response:", data);
+  if (!response.ok || !data.success) {
+    throw new Error(data.message || "Error saving sale");
+  }
 
-        currentSaleItems = [];
-        renderSaleDetails();
+  return data;
+})
+.then(data => {
+  alert(data.message || "Sale saved successfully");
 
-        document.getElementById("saleDate").value = "";
-        document.getElementById("saleProduct").value = "";
-        document.getElementById("saleQuantity").value = "";
-        document.getElementById("salePrice").value = "";
-      } else {
-        alert("Error saving sale");
-      }
-    });
+  currentSaleItems = [];
+  renderSaleDetails();
+
+  document.getElementById("saleDate").value = "";
+  document.getElementById("saleProduct").value = "";
+  document.getElementById("saleQuantity").value = "";
+  document.getElementById("salePrice").value = "";
+
+  window.location.reload();
+})
+.catch(error => {
+  alert(error.message);
+});
   });
 }
